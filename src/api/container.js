@@ -5,11 +5,15 @@ const Server = require("./server");
 const config = require("./config/environments");
 
 const Routes = require("./routes");
-const SearchRoutes = require('../api/routes/search.routes');
+const ItemRoutes = require("../api/routes/item.routes");
 
-const { SearchService } = require("../infrastructure/services");
+const { ItemService } = require("../infrastructure/services");
 
-const { SearchController } = require("../api/controllers");
+const { ItemController } = require("../api/controllers");
+
+const { ItemRepository } = require("../domain/repository");
+
+const { AuthorModel, ItemModel, CategoryModel } = require('../domain/models');
 
 const adaptRequest = require("../api/helpers/adaptRequest");
 
@@ -24,19 +28,27 @@ container
   .register({
     config: asValue(config),
   })
+  .register({
+    ItemRoutes: asFunction(ItemRoutes).singleton(),
+  })
+  .register({
+    ItemRepository: asClass(ItemRepository).singleton(),
+  })
   .register(
   { 
-    SearchRoutes: asFunction(SearchRoutes).singleton()
+    ItemModel: asClass(ItemModel),
+    CategoryModel: asClass(CategoryModel),
+    AuthorModel: asClass(AuthorModel)
    }
 )
   .register({
-    SearchService: asClass(SearchService).singleton(),
+    ItemService: asClass(ItemService).singleton(),
   })
   .register({
-    SearchController: asClass(SearchController).singleton()
+    ItemController: asClass(ItemController).singleton(),
   })
   .register({
-    adaptRequest: asValue(adaptRequest)
+    adaptRequest: asValue(adaptRequest),
   });
 
 module.exports = container;

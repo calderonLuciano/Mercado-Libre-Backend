@@ -1,4 +1,4 @@
 module.exports = {
-  SearchService: require('./searchService')
+  ItemService: require('./itemService')
 }
 

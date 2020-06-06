@@ -1,3 +1,3 @@
 module.exports = {
-  SearchController: require('./search.controller')
+  ItemController: require('./item.controller')
 }

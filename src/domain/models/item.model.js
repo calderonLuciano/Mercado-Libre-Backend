@@ -1,4 +1,4 @@
-export class Item {
+ class ItemModel {
   constructor(id, title, price, picture, condition, free_shipping) {
    this.id = id;
    this.title = title;
@@ -8,3 +8,5 @@ export class Item {
    this.free_shipping = free_shipping;
   }
  }
+
+ module.exports = ItemModel
