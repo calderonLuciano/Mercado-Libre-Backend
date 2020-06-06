@@ -1,0 +1,27 @@
+{
+  "name": "mercado-libre",
+  "version": "1.0.0",
+  "description": "Proyecto Ingreso",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "author": "Luciano Calderón",
+  "license": "ISC",
+  "dependencies": {
+    "awilix": "^4.2.6",
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.0.11",
+    "nodemon": "^2.0.4"
+  }
+}
