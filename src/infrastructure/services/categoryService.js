@@ -13,7 +13,7 @@ class CategoryService {
         return categoriesResponse.data;
       }
     } catch (error) {
-      new Error(error);
+      throw new Error(error);
     }
   };
 }

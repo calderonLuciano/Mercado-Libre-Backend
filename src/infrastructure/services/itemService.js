@@ -16,7 +16,7 @@ class ItemService {
         return result;
       }
     } catch (error) {
-      return new Error(error);
+      throw new Error(error);
     }
   };
 
@@ -35,7 +35,7 @@ class ItemService {
         return result;
       }
     } catch (error) {
-      return new Error(error);
+       throw new Error(error);
     }
   };
 
@@ -49,7 +49,7 @@ class ItemService {
         return categoriesResponse;
       }
     } catch (error) {
-      return new Error(error);
+      throw new Error(error);
     }
   };
 }
