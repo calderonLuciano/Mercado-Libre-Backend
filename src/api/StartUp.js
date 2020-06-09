@@ -1,5 +1,5 @@
 class StartUp {
-  constructor({server}) {
+  constructor({ server }) {
     this._server = server;
   }
 

@@ -5,8 +5,8 @@ const application = container.resolve("app");
 application
   .start()
   .then(async () => {
-    console.log('Bienvenido a la aplicación.')
+    console.log("Bienvenido a la aplicación.");
   })
-  .catch(err => {
+  .catch((err) => {
     process.exit();
   });

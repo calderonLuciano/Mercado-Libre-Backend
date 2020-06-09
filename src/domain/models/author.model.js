@@ -1,9 +1,8 @@
 class AuthorModel {
- constructor(name, lastName) {
+  constructor(name, lastName) {
     this.name = name;
-   this.lastName = lastName; 
-
- }
+    this.lastName = lastName;
+  }
 }
 
 module.exports = AuthorModel;

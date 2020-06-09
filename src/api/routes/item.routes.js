@@ -5,6 +5,6 @@ module.exports = ({ ItemController }) => {
 
   router.get("/items", ItemController.searchItems.bind(ItemController));
   router.get("/items/:id", ItemController.findItemsById.bind(ItemController));
-  
+
   return router;
 };

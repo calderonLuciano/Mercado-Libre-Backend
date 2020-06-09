@@ -6,7 +6,7 @@ const AuthorModel = require("../models/author.model");
 
 class ItemRepository {
   responseData;
-  constructor({CategoryService}) {
+  constructor({ CategoryService }) {
     this.responseData = {};
     this._categoryService = CategoryService;
   }
@@ -36,22 +36,33 @@ class ItemRepository {
 
   async makeCategories(categoryId) {
     let categories = [];
-    const responseCategories = await this._categoryService.getCategories(categoryId);
-    if(responseCategories){
+    const responseCategories = await this._categoryService.getCategories(
+      categoryId
+    );
+    if (responseCategories) {
       const response = responseCategories.path_from_root;
       for (const category of response) {
-        const {name} = category
+        const { name } = category;
         categories.push(name);
       }
     }
     return categories;
   }
 
-  makeItems(id, title, currency, price, picture, condition, free_shipping, location) {
+  makeItems(
+    id,
+    title,
+    currency,
+    price,
+    picture,
+    condition,
+    free_shipping,
+    location
+  ) {
     const priceGen = {
       currency,
       amount: price,
-      decimals: this.calculateDecimals(price)
+      decimals: this.calculateDecimals(price),
     };
     const itemModel = new ItemModel(
       id,
@@ -60,7 +71,7 @@ class ItemRepository {
       picture,
       condition,
       free_shipping,
-      location || ''
+      location || ""
     );
     return itemModel;
   }
@@ -78,7 +89,7 @@ class ItemRepository {
   async makeResponseSearchs({ results }) {
     const author = await this.makeAuthor(results);
     let itemsList = [];
-    const {category_id} = results[0];
+    const { category_id } = results[0];
     const categories = await this.makeCategories(category_id);
 
     for (const data of results) {
@@ -99,7 +110,7 @@ class ItemRepository {
 
   async makeResponseItems({ item, description }) {
     const author = await this.makeAuthor(item);
-   
+
     const itemModel = await this.makeItems(
       item.id,
       item.title,

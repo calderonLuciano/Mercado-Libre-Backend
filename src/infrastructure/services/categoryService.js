@@ -1,23 +1,21 @@
 const axios = require("axios");
 
 class CategoryService {
-  constructor() {
-  }
+  constructor() {}
 
-  getCategories = async(idCategory) => {
+  getCategories = async (idCategory) => {
     const urlCategories = `https://api.mercadolibre.com/categories/${idCategory}`;
 
     try {
       const categoriesResponse = await axios.get(urlCategories);
-    
-      if(categoriesResponse) {
+
+      if (categoriesResponse) {
         return categoriesResponse.data;
       }
     } catch (error) {
-      console.log(error);
+      new Error(error);
     }
-  }
-
+  };
 }
 
 module.exports = CategoryService;

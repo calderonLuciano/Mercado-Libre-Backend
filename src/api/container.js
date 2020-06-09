@@ -13,7 +13,7 @@ const { ItemController } = require("../api/controllers");
 
 const { ItemRepository } = require("../domain/repository");
 
-const { AuthorModel, ItemModel, CategoryModel } = require('../domain/models');
+const { AuthorModel, ItemModel, CategoryModel } = require("../domain/models");
 
 const container = createContainer();
 
@@ -32,20 +32,17 @@ container
   .register({
     ItemRepository: asClass(ItemRepository).singleton(),
   })
-  .register(
-  { 
+  .register({
     ItemModel: asClass(ItemModel),
     CategoryModel: asClass(CategoryModel),
-    AuthorModel: asClass(AuthorModel)
-   }
-)
+    AuthorModel: asClass(AuthorModel),
+  })
   .register({
     ItemService: asClass(ItemService).singleton(),
-    CategoryService: asClass(CategoryService).singleton()
+    CategoryService: asClass(CategoryService).singleton(),
   })
   .register({
     ItemController: asClass(ItemController).singleton(),
   });
-
 
 module.exports = container;
