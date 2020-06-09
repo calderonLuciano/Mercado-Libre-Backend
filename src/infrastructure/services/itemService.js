@@ -13,7 +13,7 @@ class ItemService {
         const result = await this._itemRepository.makeResponseSearch(response.data)
         return result
       }
-    } catch (error) {console.log(error)}
+    } catch (error) { throw new Error(error) }
   };
 
   getItemsById = async (id) => {
@@ -27,8 +27,22 @@ class ItemService {
         const result = await this._itemRepository.makeResponseItem(itemResponse.data, itemDetailResponse.data);
         return result;
       }
-    } catch (error) {console.log(error)}
+    } catch (error) {  throw new Error(error) }
   };
+
+  getCategories = async(idCategory) => {
+    const urlCategories = `https://api.mercadolibre.com/categories/${idCategory}`;
+
+    try {
+      const categoriesResponse = await axios.get(urlCategories);
+    
+      if(categoriesResponse) {
+        return categoriesResponse;
+      }
+    } catch (error) {
+      return  new Error(error) 
+    }
+  }
 
 }
 

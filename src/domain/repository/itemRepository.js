@@ -6,8 +6,9 @@ const AuthorModel = require("../models/author.model");
 
 class ItemRepository {
   responseData;
-  constructor() {
+  constructor({CategoryService}) {
     this.responseData = {};
+    this._categoryService = CategoryService;
   }
 
   async makeResponseSearch(data) {
@@ -33,15 +34,24 @@ class ItemRepository {
     return authorModel;
   }
 
-  makeCategories(category) {
-    return new CategoryModel(category);
+  async makeCategories(categoryId) {
+    let categories = [];
+    const responseCategories = await this._categoryService.getCategories(categoryId);
+    if(responseCategories){
+      const response = responseCategories.path_from_root;
+      for (const category of response) {
+        const {name} = category
+        categories.push(name);
+      }
+    }
+    return categories;
   }
 
-  makeItems(id, title, currency, price, picture, condition, free_shipping) {
+  makeItems(id, title, currency, price, picture, condition, free_shipping, location) {
     const priceGen = {
       currency,
       amount: price,
-      decimals: this.calculateDecimals(price),
+      decimals: this.calculateDecimals(price)
     };
     const itemModel = new ItemModel(
       id,
@@ -49,7 +59,8 @@ class ItemRepository {
       priceGen,
       picture,
       condition,
-      free_shipping
+      free_shipping,
+      location || ''
     );
     return itemModel;
   }
@@ -66,13 +77,11 @@ class ItemRepository {
 
   async makeResponseSearchs({ results }) {
     const author = await this.makeAuthor(results);
-    let categories = [];
-    let items = [];
+    let itemsList = [];
+    const {category_id} = results[0];
+    const categories = await this.makeCategories(category_id);
 
     for (const data of results) {
-      const categoryModel = this.makeCategories(data.category_id);
-      categories.push(categoryModel.category);
-
       const itemModel = this.makeItems(
         data.id,
         data.title,
@@ -80,11 +89,12 @@ class ItemRepository {
         data.price,
         data.thumbnail,
         data.condition,
-        data.shipping.free_shipping
+        data.shipping.free_shipping,
+        data.address.state_name
       );
-      items.push(itemModel);
+      itemsList.push(itemModel);
     }
-    return { author, categories, items };
+    return { author, categories, items: itemsList };
   }
 
   async makeResponseItems({ item, description }) {
@@ -95,7 +105,7 @@ class ItemRepository {
       item.title,
       item.currency_id,
       item.price,
-      item.thumbnail,
+      item.pictures[0].url,
       item.condition,
       item.shipping.free_shipping
     );

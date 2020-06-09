@@ -7,15 +7,13 @@ const config = require("./config/environments");
 const Routes = require("./routes");
 const ItemRoutes = require("../api/routes/item.routes");
 
-const { ItemService } = require("../infrastructure/services");
+const { ItemService, CategoryService } = require("../infrastructure/services");
 
 const { ItemController } = require("../api/controllers");
 
 const { ItemRepository } = require("../domain/repository");
 
 const { AuthorModel, ItemModel, CategoryModel } = require('../domain/models');
-
-const adaptRequest = require("../api/helpers/adaptRequest");
 
 const container = createContainer();
 
@@ -43,12 +41,11 @@ container
 )
   .register({
     ItemService: asClass(ItemService).singleton(),
+    CategoryService: asClass(CategoryService).singleton()
   })
   .register({
     ItemController: asClass(ItemController).singleton(),
-  })
-  .register({
-    adaptRequest: asValue(adaptRequest),
   });
+
 
 module.exports = container;
